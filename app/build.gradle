@@ -4,14 +4,18 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+
 android {
-    compileSdkVersion 28
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
     defaultConfig {
         applicationId "com.jirawatpoo.oxforddictpicture"
-        minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        versionCode globalConfiguration["androidVersion"]
+        versionName globalConfiguration["androidVersionName"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,10 +28,64 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    def uiDependencies = rootProject.ext.uiDependencies
+    def uiTestDependencies = rootProject.ext.uiTestDependencies
+
+    implementation uiDependencies.javaxAnnotation
+    implementation uiDependencies.kotlin
+    implementation uiDependencies.javaxInject
+    implementation uiDependencies.rxKotlin
+    implementation uiDependencies.androidAnnotations
+    implementation uiDependencies.androidSupportV4
+    implementation uiDependencies.androidSupportV13
+    implementation uiDependencies.appCompatV7
+    implementation uiDependencies.supportRecyclerView
+    implementation uiDependencies.supportDesign
+    implementation uiDependencies.timber
+    implementation uiDependencies.rxAndroid
+    implementation uiDependencies.glide
+    implementation uiDependencies.dagger
+    implementation uiDependencies.daggerSupport
+    implementation uiDependencies.archRuntime
+    implementation uiDependencies.archExtensions
+    annotationProcessor uiDependencies.archCompiler
+
+
+
+    kapt presentationDependencies.archCompiler
+
+    testImplementation uiTestDependencies.kotlinJUnit
+
+    kapt uiDependencies.daggerCompiler
+    kapt uiDependencies.daggerProcessor
+    compileOnly uiDependencies.glassfishAnnotation
+
+    // Instrumentation test dependencies
+    androidTestImplementation uiTestDependencies.junit
+    androidTestImplementation uiTestDependencies.mockito
+    androidTestImplementation uiTestDependencies.mockitoAndroid
+    androidTestImplementation (uiTestDependencies.espressoCore) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestImplementation (uiTestDependencies.androidRunner) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestImplementation (uiTestDependencies.androidRules) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestImplementation (uiTestDependencies.espressoIntents) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestImplementation(uiTestDependencies.espressoContrib) {
+        exclude module: 'appcompat'
+        exclude module: 'appcompat-v7'
+        exclude module: 'support-v4'
+        exclude module: 'support-v13'
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'design'
+    }
+
+    kaptTest uiDependencies.daggerCompiler
+    kaptAndroidTest uiDependencies.daggerCompiler
 }
