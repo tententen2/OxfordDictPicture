@@ -27,43 +27,48 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     def uiDependencies = rootProject.ext.uiDependencies
     def uiTestDependencies = rootProject.ext.uiTestDependencies
+    implementation(
+            fileTree(dir: 'libs', include: ['*.jar']),
+            uiDependencies.javaxAnnotation,
+            uiDependencies.kotlin,
+            uiDependencies.javaxInject,
+            uiDependencies.rxKotlin,
+            uiDependencies.androidAnnotations,
+            uiDependencies.androidSupportV4,
+            uiDependencies.androidSupportV13,
+            uiDependencies.appCompatV7,
+            uiDependencies.supportRecyclerView,
+            uiDependencies.supportDesign,
+            uiDependencies.timber,
+            uiDependencies.rxAndroid,
+            uiDependencies.glide,
+            uiDependencies.dagger,
+            uiDependencies.daggerSupport,
+            uiDependencies.archRuntime,
+            uiDependencies.archExtensions,
+            uiDependencies.materialsearchview,
+            uiDependencies.paging,
+    )
+    kapt(
+            presentationDependencies.archCompiler,
+            uiDependencies.daggerCompiler,
+            uiDependencies.daggerProcessor
+    )
 
-    implementation uiDependencies.javaxAnnotation
-    implementation uiDependencies.kotlin
-    implementation uiDependencies.javaxInject
-    implementation uiDependencies.rxKotlin
-    implementation uiDependencies.androidAnnotations
-    implementation uiDependencies.androidSupportV4
-    implementation uiDependencies.androidSupportV13
-    implementation uiDependencies.appCompatV7
-    implementation uiDependencies.supportRecyclerView
-    implementation uiDependencies.supportDesign
-    implementation uiDependencies.timber
-    implementation uiDependencies.rxAndroid
-    implementation uiDependencies.glide
-    implementation uiDependencies.dagger
-    implementation uiDependencies.daggerSupport
-    implementation uiDependencies.archRuntime
-    implementation uiDependencies.archExtensions
     annotationProcessor uiDependencies.archCompiler
-
-
-
-    kapt presentationDependencies.archCompiler
 
     testImplementation uiTestDependencies.kotlinJUnit
 
-    kapt uiDependencies.daggerCompiler
-    kapt uiDependencies.daggerProcessor
     compileOnly uiDependencies.glassfishAnnotation
 
     // Instrumentation test dependencies
-    androidTestImplementation uiTestDependencies.junit
-    androidTestImplementation uiTestDependencies.mockito
-    androidTestImplementation uiTestDependencies.mockitoAndroid
+    androidTestImplementation(
+            uiTestDependencies.junit,
+            uiTestDependencies.mockito,
+            uiTestDependencies.mockitoAndroid
+    )
     androidTestImplementation (uiTestDependencies.espressoCore) {
         exclude group: 'com.android.support', module: 'support-annotations'
     }

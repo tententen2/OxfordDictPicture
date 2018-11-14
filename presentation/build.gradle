@@ -26,13 +26,34 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    def presentation = rootProject.ext.presentationDependencies
+    def presentationTest = rootProject.ext.presentationTestDependencies
+    implementation(
+            fileTree(dir: 'libs', include: ['*.jar']),
+            presentation.daggerCompiler,
+            presentation.dagger,
+            presentation.okHttp,
+            presentation.okHttpLogger,
+            presentation.gson,
+            presentation.rxKotlin,
+            presentation.kotlin,
+            presentation.rxAndroid,
+            presentation.javaxAnnotation,
+            presentation.javaxInject,
+            presentation.androidAnnotations,
+            presentation.retrofit,
+            presentation.retrofitConverter,
+            presentation.retrofitAdapter,
+            presentation.archRuntime,
+            presentation.archExtensions,
+            presentation.archCompiler,
+            presentation.paging,
+    )
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {
     mavenCentral()

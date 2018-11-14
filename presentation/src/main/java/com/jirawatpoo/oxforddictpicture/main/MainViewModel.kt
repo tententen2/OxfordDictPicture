@@ -1,4 +1,13 @@
 package com.jirawatpoo.oxforddictpicture.main
 
-class MainViewModel {
+import android.arch.lifecycle.ViewModel
+
+class MainViewModel:ViewModel() {
+
+
+
+    init {
+
+    }
+
 }
