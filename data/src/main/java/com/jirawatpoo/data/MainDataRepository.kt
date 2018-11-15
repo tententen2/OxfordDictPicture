@@ -10,5 +10,5 @@ class MainDataRepository @Inject constructor(
     private val remote:MainRemote
 ):MainRepository {
     override fun getDictList(page: Int): Flowable<List<DataDict>>
-            = remote.getMainDataList(page)
+            = Flowable.just(arrayListOf())
 }
