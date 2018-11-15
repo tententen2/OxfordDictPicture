@@ -7,10 +7,10 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class MainApplication:Application() {
-//    @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-//
-//    override fun activityInjector(): AndroidInjector<Activity>  = activityDispatchingAndroidInjector
+class MainApplication:Application(),HasActivityInjector {
+    @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity>  = activityDispatchingAndroidInjector
 
     override fun onCreate() {
         super.onCreate()

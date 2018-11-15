@@ -7,7 +7,7 @@ android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
     compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
-    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         minSdkVersion globalConfiguration["androidMinSdkVersion"]
@@ -44,6 +44,7 @@ dependencies {
             remoteDependencies.retrofit,
             remoteDependencies.retrofitConverter,
             remoteDependencies.retrofitAdapter,
+            remoteDependencies.androidAnotation,
     )
 
     testImplementation(

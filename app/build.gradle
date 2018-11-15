@@ -31,8 +31,9 @@ dependencies {
     def uiTestDependencies = rootProject.ext.uiTestDependencies
     implementation(
             fileTree(dir: 'libs', include: ['*.jar']),
-            project (':remote'),
+            project (':presentation'),
             project (':data'),
+            project (':remote'),
             uiDependencies.javaxAnnotation,
             uiDependencies.kotlin,
             uiDependencies.javaxInject,

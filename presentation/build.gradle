@@ -30,6 +30,7 @@ dependencies {
     def presentationTest = rootProject.ext.presentationTestDependencies
     implementation(
             fileTree(dir: 'libs', include: ['*.jar']),
+            project(':domain'),
             presentation.daggerCompiler,
             presentation.dagger,
             presentation.okHttp,
