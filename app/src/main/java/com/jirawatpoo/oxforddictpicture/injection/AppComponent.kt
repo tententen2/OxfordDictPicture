@@ -2,11 +2,21 @@ package com.jirawatpoo.oxforddictpicture.injection
 
 import android.app.Application
 import com.jirawatpoo.oxforddictpicture.MainApplication
+import com.jirawatpoo.oxforddictpicture.injection.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
-@Component(modules = [AndroidSupportInjectionModule::class])
+@Singleton
+@Component(modules = [
+    AndroidSupportInjectionModule::class,
+    ApplicationModule::class,
+    UiModule::class,
+    PresentationModule::class,
+    DataModule::class,
+    RemoteModule::class
+])
 interface AppComponent {
 
     @Component.Builder

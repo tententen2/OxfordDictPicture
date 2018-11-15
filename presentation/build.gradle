@@ -1,19 +1,18 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
 
 android {
-    compileSdkVersion 28
+    def globalConfiguration = rootProject.extensions.getByName("ext")
 
-
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
 
     defaultConfig {
-        minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -22,40 +21,55 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    }
+
+}
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
 }
 
 dependencies {
-    def presentation = rootProject.ext.presentationDependencies
-    def presentationTest = rootProject.ext.presentationTestDependencies
-    implementation(
-            fileTree(dir: 'libs', include: ['*.jar']),
-            project(':domain'),
-            presentation.daggerCompiler,
-            presentation.dagger,
-            presentation.okHttp,
-            presentation.okHttpLogger,
-            presentation.gson,
-            presentation.rxKotlin,
-            presentation.kotlin,
-            presentation.rxAndroid,
-            presentation.javaxAnnotation,
-            presentation.javaxInject,
-            presentation.androidAnnotations,
-            presentation.retrofit,
-            presentation.retrofitConverter,
-            presentation.retrofitAdapter,
-            presentation.archRuntime,
-            presentation.archExtensions,
-            presentation.archCompiler,
-            presentation.paging,
+    def presentationDependencies = rootProject.ext.presentationDependencies
+    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
+    implementation (
+            presentationDependencies.javaxAnnotation,
+            presentationDependencies.kotlin,
+            presentationDependencies.javaxInject,
+            presentationDependencies.rxKotlin,
+            presentationDependencies.archRuntime,
+            presentationDependencies.archExtensions,
+            presentationDependencies.paging,
     )
+    kapt presentationDependencies.archCompiler
 
+    testImplementation presentationTestDependencies.junit
+    testImplementation presentationTestDependencies.mockito
+    testImplementation presentationTestDependencies.assertj
+    testImplementation presentationTestDependencies.robolectric
+    testImplementation "android.arch.core:core-testing:1.0.0-alpha9-1"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-}
-repositories {
-    mavenCentral()
+    implementation project(':domain')
 }

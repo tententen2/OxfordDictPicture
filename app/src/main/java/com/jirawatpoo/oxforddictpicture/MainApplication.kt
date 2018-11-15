@@ -2,6 +2,7 @@ package com.jirawatpoo.oxforddictpicture
 
 import android.app.Activity
 import android.app.Application
+import com.jirawatpoo.oxforddictpicture.injection.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -14,6 +15,6 @@ class MainApplication:Application(),HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-//        DaggerAppComponent.builder().application(this).build().inject(this)
+        DaggerAppComponent.builder().application(this).build().inject(this)
     }
 }

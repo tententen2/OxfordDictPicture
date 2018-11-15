@@ -5,6 +5,7 @@ import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
@@ -24,6 +25,8 @@ class MainFragment :BaseFragment() {
     @Inject lateinit var mainAdapter:MainAdapter
     @Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MainViewModel
+
+    var sdsko = arrayListOf<String>()
 
     companion object {
         fun newInstance(): MainFragment = MainFragment()

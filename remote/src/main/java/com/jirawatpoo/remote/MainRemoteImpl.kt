@@ -9,9 +9,10 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class MainRemoteImpl @Inject constructor(
-    private val context: Context,
-    @RawRes private val resourceId:Int
+    private val context: Context
 ):MainRemote {
+
+    @RawRes private val resourceId:Int = R.raw.oxford_3000
 
     override fun getMainDataList(page: Int): Flowable<List<DataDictData>>
          = Flowable.fromCallable {

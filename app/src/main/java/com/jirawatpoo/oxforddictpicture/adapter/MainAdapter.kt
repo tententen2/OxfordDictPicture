@@ -1,7 +1,6 @@
 package com.jirawatpoo.oxforddictpicture.adapter
 
 import android.arch.paging.PagedListAdapter
-import android.support.v7.recyclerview.extensions.ListAdapter
 import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,12 +17,7 @@ class MainAdapter @Inject constructor():PagedListAdapter<DataDictModel,MainViewH
 }
 
 class DiffCallBack :DiffUtil.ItemCallback<DataDictModel>(){
-    override fun areItemsTheSame(oldItemPosition: DataDictModel, newItemPosition: DataDictModel): Boolean = oldItemPosition.id == newItemPosition.id
+    override fun areItemsTheSame(oldItemPosition: DataDictModel, newItemPosition: DataDictModel): Boolean = oldItemPosition.title == newItemPosition.title
 
     override fun areContentsTheSame(oldItemPosition: DataDictModel, newItemPosition: DataDictModel): Boolean = oldItemPosition.title == newItemPosition.title
 }
-
-data class DataDict(
-    var id:Int = 0,
-    var title:String = ""
-)

@@ -8,9 +8,12 @@ dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
     def dataTestDependencies = rootProject.ext.dataTestDependencies
 
-    implementation(
+    compile(
             project(':domain'),
             dataDependencies.javaxAnnotation,
+    )
+
+    implementation(
             dataDependencies.kotlin,
             dataDependencies.javaxInject,
             dataDependencies.rxKotlin,

@@ -16,6 +16,7 @@ android {
         targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
         versionCode globalConfiguration["androidVersion"]
         versionName globalConfiguration["androidVersionName"]
+        multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,8 +25,42 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+    }
 }
 
+
+kapt {
+    correctErrorTypes = true
+}
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
 dependencies {
     def uiDependencies = rootProject.ext.uiDependencies
     def uiTestDependencies = rootProject.ext.uiTestDependencies
@@ -53,16 +88,17 @@ dependencies {
             uiDependencies.archExtensions,
             uiDependencies.materialsearchview,
             uiDependencies.paging,
+            presentationDependencies.archRuntime,
+            presentationDependencies.archExtensions,
     )
+    testImplementation uiTestDependencies.kotlinJUnit
+
     kapt(
             presentationDependencies.archCompiler,
             uiDependencies.daggerCompiler,
-            uiDependencies.daggerProcessor
+            uiDependencies.daggerProcessor,
     )
 
-    annotationProcessor uiDependencies.archCompiler
-
-    testImplementation uiTestDependencies.kotlinJUnit
 
     compileOnly uiDependencies.glassfishAnnotation
 
