@@ -1,6 +1,7 @@
 package com.jirawatpoo.oxforddictpicture.ui
 
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
@@ -14,9 +15,11 @@ import com.jirawatpoo.oxforddictpicture.adapter.MainAdapter
 import com.jirawatpoo.oxforddictpicture.base.BaseFragment
 import com.jirawatpoo.oxforddictpicture.main.MainViewModel
 import com.jirawatpoo.oxforddictpicture.main.ViewModelFactory
+import com.jirawatpoo.oxforddictpicture.main.model.DataDictModel
 import com.jirawatpoo.oxforddictpicture.util.observe
 import com.jirawatpoo.oxforddictpicture.util.setSupportActionbar
 import kotlinx.android.synthetic.main.fragment_main.*
+import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -26,10 +29,16 @@ class MainFragment :BaseFragment() {
     @Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MainViewModel
 
-    var sdsko = arrayListOf<String>()
-
     companion object {
         fun newInstance(): MainFragment = MainFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this,viewModelFactory).get(MainViewModel::class.java)
+        } ?: throw Exception("Invalid Activity")
+        setUpObserver()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -39,20 +48,21 @@ class MainFragment :BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this,viewModelFactory).get(MainViewModel::class.java)
         setUpView()
-        setUpObserver()
     }
 
     private fun setUpView() {
         rc_listWord.adapter = mainAdapter
-        rc_listWord.layoutManager = GridLayoutManager(context,4)
+        rc_listWord.layoutManager = GridLayoutManager(context,6)
         rc_listWord.addItemDecoration(DividerItemDecoration(context, HORIZONTAL))
     }
 
     private fun setUpObserver() {
         observe(viewModel.getListData()){
             mainAdapter.submitList(it)
+        }
+        observe(viewModel.stateLoading){
+            Log.d("dksokdosakdkoa",it.toString())
         }
     }
 

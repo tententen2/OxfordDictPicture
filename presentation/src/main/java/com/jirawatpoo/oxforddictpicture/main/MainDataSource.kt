@@ -2,6 +2,7 @@ package com.jirawatpoo.oxforddictpicture.main
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
+import android.util.Log
 import com.jirawatpoo.domain.interactor.main.GetDictList
 import com.jirawatpoo.domain.model.DataDictDomain
 import com.jirawatpoo.oxforddictpicture.main.mapper.MainPresentMapper
@@ -40,6 +41,7 @@ class MainDataSource constructor(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, DataDictModel>) {
         networkState.postValue(NetworkState.Loading)
+        Log.d("dkosakdoskao","after "+params.key)
         useCase.execute(object : DisposableSubscriber<List<DataDictDomain>>(){
             override fun onComplete() {
                 networkState.postValue(NetworkState.Loaded)

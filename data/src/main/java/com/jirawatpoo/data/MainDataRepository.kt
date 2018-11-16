@@ -12,7 +12,7 @@ class MainDataRepository @Inject constructor(
     private val mapper:MainDataMapper
 ):MainRepository {
     override fun getDictList(page: Int): Flowable<List<DataDictDomain>> =
-        remote.getMainDataList(2)
+        remote.getMainDataList(page)
         .flatMap {
             Flowable.just(it.map { mapper.mapFromEntity(it) })
         }

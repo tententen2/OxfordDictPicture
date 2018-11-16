@@ -32,12 +32,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:id="@+id/dkosakdo"
-        android:text="Add data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_listWord"
         android:layout_width="match_parent"

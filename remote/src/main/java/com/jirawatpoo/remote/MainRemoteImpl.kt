@@ -18,9 +18,19 @@ class MainRemoteImpl @Inject constructor(
          = Flowable.fromCallable {
             context.jsonToClass<List<String>>(resourceId)
         }.flatMap {
+        val item = page*100
+        val first = item-100
+        val last = if(item > it.size) it.size else item
+        if(first > it.size){
             Flowable.fromCallable {
-                it.subList(0,page*100)
+                listOf<String>()
             }
+        }else{
+            Flowable.fromCallable {
+                it.subList(first,last)
+            }
+        }
+
         }.map {
          it.map {
              DataDictData(1,it)
