@@ -2,6 +2,8 @@ package com.jirawatpoo.oxforddictpicture.injection.module
 
 import com.jirawatpoo.domain.executor.PostExecutionThread
 import com.jirawatpoo.oxforddictpicture.UiThread
+import com.jirawatpoo.oxforddictpicture.ui.DetailDictActivity
+import com.jirawatpoo.oxforddictpicture.ui.DetailDictFragment
 import com.jirawatpoo.oxforddictpicture.ui.MainActivity
 import com.jirawatpoo.oxforddictpicture.ui.MainFragment
 import dagger.Binds
@@ -19,6 +21,9 @@ abstract class UiModule {
 
     @ContributesAndroidInjector(modules = [MainFragmentBinder::class])
     abstract fun contributeMainActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules = [DetailFragmentBinder::class])
+    abstract fun contributeDetailActivity(): DetailDictActivity
 }
 
 @Module
@@ -26,4 +31,11 @@ abstract class MainFragmentBinder{
 
     @ContributesAndroidInjector
     abstract fun bindFragment():MainFragment
+
+}
+
+@Module
+abstract class DetailFragmentBinder{
+    @ContributesAndroidInjector
+    abstract fun bindDetailFragment():DetailDictFragment
 }

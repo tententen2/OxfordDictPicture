@@ -18,8 +18,15 @@ class MainViewModel @Inject constructor(
     val stateLoading:LiveData<NetworkState>
 
     init {
-        Log.d("kdosakodkosa","news")
-        pagedList = LivePagedListBuilder(pagingSource,10).build()
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(true) //in my original implementation it was false
+            .setInitialLoadSizeHint(60)
+            .setPageSize(20)
+            .setPrefetchDistance(60)
+            .build()
+
+        pagedList = LivePagedListBuilder(pagingSource,config)
+            .build()
         stateLoading = Transformations.switchMap(pagingSource.sourceLiveData){ it.networkState }
     }
 

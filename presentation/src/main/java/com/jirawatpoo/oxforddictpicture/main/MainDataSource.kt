@@ -20,6 +20,7 @@ class MainDataSource constructor(
 
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, DataDictModel>) {
+        Log.d("dkosakdksoa","first")
         networkState.postValue(NetworkState.Loading)
         useCase.execute(object : DisposableSubscriber<List<DataDictDomain>>(){
             override fun onComplete() {
@@ -40,8 +41,8 @@ class MainDataSource constructor(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, DataDictModel>) {
+        Log.d("dkosakdksoa","sec")
         networkState.postValue(NetworkState.Loading)
-        Log.d("dkosakdoskao","after "+params.key)
         useCase.execute(object : DisposableSubscriber<List<DataDictDomain>>(){
             override fun onComplete() {
                 networkState.postValue(NetworkState.Loaded)
