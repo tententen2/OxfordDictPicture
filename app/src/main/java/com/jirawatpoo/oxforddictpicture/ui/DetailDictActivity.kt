@@ -21,6 +21,5 @@ class DetailDictActivity(override val contentView: Int = R.layout.activity_detai
     }
 
     override fun viewAlreadyPresent() {
-
     }
 }

@@ -1,6 +1,7 @@
 package com.jirawatpoo.oxforddictpicture.ui
 
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.jirawatpoo.oxforddictpicture.R
 import com.jirawatpoo.oxforddictpicture.base.BaseFragment
 import com.jirawatpoo.oxforddictpicture.router.Router
@@ -24,5 +25,12 @@ class DetailDictFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setSupportActionbar(toolbar)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as? AppCompatActivity)?.supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
     }
+
 }
