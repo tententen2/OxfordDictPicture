@@ -3,6 +3,8 @@ package com.jirawatpoo.remote
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jirawatpoo.remote.service.DetailDictService
+import com.jirawatpoo.remote.service.DetailImageService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,6 +19,13 @@ object DictServiceFactory {
         val okHttpClient = makeOkHttpClient(
             makeLoggingInterceptor(isDebug),HttpInterCeptor())
         return makeRetrofit(EndPoint.oxfordDict,okHttpClient,makeGson()).create(DetailDictService::class.java)
+    }
+
+    fun makeDetailImageService(isDebug: Boolean): DetailImageService {
+        val okHttpClient = makeOkHttpClient(
+            makeLoggingInterceptor(isDebug),HttpInterCeptor()
+        )
+        return makeRetrofit(EndPoint.oxfordImage,okHttpClient, makeGson()).create(DetailImageService::class.java)
     }
 
     private fun makeRetrofit(baseUrl:String,okHttpClient: OkHttpClient,gson:Gson):Retrofit{

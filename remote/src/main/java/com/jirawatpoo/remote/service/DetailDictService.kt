@@ -1,4 +1,4 @@
-package com.jirawatpoo.remote
+package com.jirawatpoo.remote.service
 
 import com.jirawatpoo.remote.model.DataDictDetailRemote
 import io.reactivex.Single
