@@ -1,11 +1,7 @@
 package com.jirawatpoo.oxforddictpicture.ui
 
 import android.arch.lifecycle.ViewModelProviders
-import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
-import android.os.Parcelable
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
@@ -15,7 +11,7 @@ import com.jirawatpoo.oxforddictpicture.R
 import com.jirawatpoo.oxforddictpicture.adapter.Listner
 import com.jirawatpoo.oxforddictpicture.adapter.MainAdapter
 import com.jirawatpoo.oxforddictpicture.base.BaseFragment
-import com.jirawatpoo.oxforddictpicture.main.MainViewModel
+import com.jirawatpoo.oxforddictpicture.main.viewmodel.MainViewModel
 import com.jirawatpoo.oxforddictpicture.main.ViewModelFactory
 import com.jirawatpoo.oxforddictpicture.router.Router
 import com.jirawatpoo.oxforddictpicture.util.observe

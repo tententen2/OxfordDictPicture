@@ -1,4 +1,4 @@
-package com.jirawatpoo.oxforddictpicture.main
+package com.jirawatpoo.oxforddictpicture.main.paging
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
@@ -9,7 +9,6 @@ import com.jirawatpoo.oxforddictpicture.main.mapper.MainPresentMapper
 import com.jirawatpoo.oxforddictpicture.main.model.DataDictModel
 import com.jirawatpoo.oxforddictpicture.main.state.NetworkState
 import io.reactivex.subscribers.DisposableSubscriber
-import javax.inject.Inject
 
 class MainDataSource constructor(
     private val useCase:GetDictList,

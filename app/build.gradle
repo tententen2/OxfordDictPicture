@@ -68,6 +68,7 @@ dependencies {
             fileTree(dir: 'libs', include: ['*.jar']),
             project(':presentation'),
             project(':data'),
+            project(':cache'),
             project(':remote'),
             uiDependencies.javaxAnnotation,
             uiDependencies.kotlin,
