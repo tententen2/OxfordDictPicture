@@ -3,9 +3,13 @@ package com.jirawatpoo.oxforddictpicture.ui
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSnapHelper
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import com.jirawatpoo.oxforddictpicture.R
+import com.jirawatpoo.oxforddictpicture.adapter.DetailImageAdapter
 import com.jirawatpoo.oxforddictpicture.base.BaseFragment
 import com.jirawatpoo.oxforddictpicture.main.ViewModelFactory
 import com.jirawatpoo.oxforddictpicture.main.viewmodel.DetailDictViewModel
@@ -20,6 +24,7 @@ class DetailDictFragment : BaseFragment(), View.OnClickListener {
 
     @Inject lateinit var viewmodelFactory:ViewModelFactory
     lateinit var detailViewModel:DetailDictViewModel
+    lateinit var detailImageAdapter:DetailImageAdapter
 
     override val contentView: Int = R.layout.fragment_detail_dict
 
@@ -45,12 +50,24 @@ class DetailDictFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         setUpViewmodel()
         setUpListner()
+        setUpView()
+    }
+
+    private fun setUpView() {
+        detailImageAdapter = DetailImageAdapter()
+        rc_photo.adapter = detailImageAdapter
+        rc_photo.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        LinearSnapHelper().attachToRecyclerView(rc_photo)
     }
 
     private fun setUpListner() {
         toolbar.setNavigationOnClickListener(this)
         observe(detailViewModel.detailData){
             Log.d("dkoakodksao",it.toString())
+        }
+        observe(detailViewModel.imageData){
+            detailImageAdapter.updateView(it.media)
+            Log.d("dkoakodksao image ",it.toString())
         }
 
     }
