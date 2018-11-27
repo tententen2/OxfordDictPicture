@@ -8,9 +8,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.jirawatpoo.oxforddictpicture.R
 import com.jirawatpoo.oxforddictpicture.main.model.DataDictModel
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import javax.inject.Inject
 
-class MainAdapter @Inject constructor() : PagedListAdapter<DataDictModel, MainViewHolder>(DiffUtil()) {
+class MainAdapter @Inject constructor() : PagedListAdapter<DataDictModel, MainViewHolder>(DiffUtil()),FastScrollRecyclerView.SectionedAdapter {
+
+    override fun getSectionName(position: Int): String {
+        val item = getItem(position)?.title ?: ""
+        return item.subSequence(0,1).toString()
+    }
 
     open var listner:Listner? = null
 

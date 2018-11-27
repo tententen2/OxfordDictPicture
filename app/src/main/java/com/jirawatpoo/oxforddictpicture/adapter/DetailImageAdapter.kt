@@ -1,41 +1,36 @@
 package com.jirawatpoo.oxforddictpicture.adapter
 
 import android.media.Image
+import android.support.v4.view.PagerAdapter
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.jirawatpoo.oxforddictpicture.R
 
-class DetailImageAdapter : RecyclerView.Adapter<DetailImageViewHolder>() {
-    private var list = listOf<String>()
+class DetailImageAdapter(private val imageList:List<String>) : PagerAdapter() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailImageViewHolder =
-        DetailImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.layout_item_detail,parent,false))
+    override fun isViewFromObject(view: View, obj: Any): Boolean = view == obj
 
+    override fun getCount(): Int = imageList.size
 
-    override fun getItemCount(): Int =
-        list.size
-
-    override fun onBindViewHolder(viewHolder: DetailImageViewHolder, position: Int) {
-        val item = list[position]
-        viewHolder.bind(item)
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+       val linearLayout = LayoutInflater.from(container.context).inflate(R.layout.layout_item_detail,null)
+       val image:ImageView = linearLayout.findViewById(R.id.vh_img)
+        Glide.with(container.context).load(imageList[position]).into(image)
+        container.addView(linearLayout)
+        return linearLayout
     }
 
-    fun updateView(list:List<String>){
-        this.list = list
-        notifyDataSetChanged()
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
     }
-}
 
-
-class DetailImageViewHolder(view: View) : RecyclerView.ViewHolder(view){
-
-    private val image:ImageView = view.findViewById(R.id.vh_img)
-
-    fun bind(url:String){
-        Glide.with(itemView).load(url).into(image)
+    override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+        val linearLayout:LinearLayout = obj as LinearLayout
+        container.removeView(linearLayout)
     }
 }
