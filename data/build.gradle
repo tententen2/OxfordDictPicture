@@ -17,6 +17,7 @@ dependencies {
             dataDependencies.kotlin,
             dataDependencies.javaxInject,
             dataDependencies.rxKotlin,
+            presentationDependencies.gson
     )
 
     testImplementation dataTestDependencies.junit

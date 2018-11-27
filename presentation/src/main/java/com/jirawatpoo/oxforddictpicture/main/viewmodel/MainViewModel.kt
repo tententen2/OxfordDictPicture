@@ -1,17 +1,17 @@
-package com.jirawatpoo.oxforddictpicture.main
+package com.jirawatpoo.oxforddictpicture.main.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import android.util.Log
+import com.jirawatpoo.oxforddictpicture.main.paging.MainDataSourceFactory
 import com.jirawatpoo.oxforddictpicture.main.model.DataDictModel
 import com.jirawatpoo.oxforddictpicture.main.state.NetworkState
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val pagingSource:MainDataSourceFactory
+    pagingSource: MainDataSourceFactory
 ):ViewModel() {
 
     val pagedList:LiveData<PagedList<DataDictModel>>

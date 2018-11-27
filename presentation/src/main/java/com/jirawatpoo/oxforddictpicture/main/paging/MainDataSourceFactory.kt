@@ -1,4 +1,4 @@
-package com.jirawatpoo.oxforddictpicture.main
+package com.jirawatpoo.oxforddictpicture.main.paging
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.DataSource
@@ -14,7 +14,7 @@ class MainDataSourceFactory @Inject constructor(
 
     val sourceLiveData = MutableLiveData<MainDataSource>()
     override fun create(): DataSource<Int, DataDictModel> {
-        val dataSource = MainDataSource(useCase,mapper)
+        val dataSource = MainDataSource(useCase, mapper)
         sourceLiveData.postValue(dataSource)
         return dataSource
     }

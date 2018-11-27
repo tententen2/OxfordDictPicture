@@ -1,7 +1,6 @@
 package com.jirawatpoo.oxforddictpicture.ui
 
 import android.os.Bundle
-import android.util.Log
 import com.jirawatpoo.oxforddictpicture.R
 import com.jirawatpoo.oxforddictpicture.base.BaseActivity
 import com.jirawatpoo.oxforddictpicture.router.Router
@@ -15,12 +14,11 @@ class DetailDictActivity(override val contentView: Int = R.layout.activity_detai
         val data = intent?.extras?.getString(Router.DETAIL_ACTIVITY_QUERY) ?: ""
         savedInstanceState ?: run {
             supportFragmentManager.show {
-                replace(R.id.detail_container,DetailDictFragment.newTnstance(data))
+                replace(R.id.detail_container,DetailDictFragment.newInstance(data))
             }
         }
     }
 
     override fun viewAlreadyPresent() {
-
     }
 }
