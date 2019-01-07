@@ -7,14 +7,15 @@ import com.jirawatpoo.oxforddictpicture.main.mapper.MainPresentMapper
 import com.jirawatpoo.oxforddictpicture.main.model.DataDictModel
 import javax.inject.Inject
 
-class MainDataSourceFactory @Inject constructor(
+class MainDataSourceFactory constructor(
     private val useCase: GetDictList,
-    private val mapper: MainPresentMapper
+    private val mapper: MainPresentMapper,
+    private val query:String
 ):DataSource.Factory<Int, DataDictModel>() {
 
     val sourceLiveData = MutableLiveData<MainDataSource>()
     override fun create(): DataSource<Int, DataDictModel> {
-        val dataSource = MainDataSource(useCase, mapper)
+        val dataSource = MainDataSource(useCase, mapper,query)
         sourceLiveData.postValue(dataSource)
         return dataSource
     }

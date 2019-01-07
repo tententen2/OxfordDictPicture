@@ -17,5 +17,5 @@ enum class Network(val value:Int,val error: String){
 sealed class NetworkLoad(val value: Int,val error:String){
     data class Loaded(val defaultValue: Int = 0) : NetworkLoad(defaultValue,"")
     data class Loading(val defaultValue: Int = 1) : NetworkLoad(defaultValue,"")
-    data class LoadError(val errorValue:String, val defaultValue: Int = 0) : NetworkLoad(defaultValue,errorValue)
+    data class LoadError(val errorValue:String, val defaultValue: Int = 2) : NetworkLoad(defaultValue,errorValue)
 }

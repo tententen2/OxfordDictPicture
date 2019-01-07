@@ -9,7 +9,7 @@ import io.reactivex.Single
 import java.lang.UnsupportedOperationException
 import javax.inject.Inject
 
-class DetailDataStoreRemote @Inject constructor(
+open class DetailDataStoreRemote @Inject constructor(
     private val detailRemote:DetailDictRemote
 ):DetailDictStore {
     override fun clearDetailImageData(): Completable

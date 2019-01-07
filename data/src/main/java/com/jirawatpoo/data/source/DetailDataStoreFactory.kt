@@ -5,15 +5,15 @@ import com.jirawatpoo.data.repository.detaildict.DetailDictStore
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class DetailDataStoreFactory @Inject constructor(
+open class DetailDataStoreFactory @Inject constructor(
     private val bufferroCache:DetailDictCache,
     private val remote:DetailDataStoreRemote,
     private val dataBase:DetailDataCacheStore
 ) {
-    fun saveData() : Completable = dataBase.saveDetailDict()
+    fun saveData() : Completable = retrieveCacheDataStore().saveDetailDict()
 
-    fun retrieveDetailData():DetailDictStore{
-        return if(bufferroCache.isCache()){
+    fun retrieveDetailData(isCache:Boolean = false):DetailDictStore{
+        return if(isCache && bufferroCache.isCache()){
             retrieveCacheDataStore()
         }else{
             retrieveRemoteDataStore()
@@ -22,14 +22,14 @@ class DetailDataStoreFactory @Inject constructor(
     /**
      * Return an instance of the Cache Data Store
      */
-    private fun retrieveCacheDataStore(): DetailDictStore {
+    open fun retrieveCacheDataStore(): DetailDictStore {
         return dataBase
     }
 
     /**
      * Return an instance of the Remote Data Store
      */
-    private fun retrieveRemoteDataStore(): DetailDictStore {
+    open fun retrieveRemoteDataStore(): DetailDictStore {
         return remote
     }
 

@@ -5,5 +5,5 @@ import io.reactivex.Flowable
 
 interface MainRepository {
 
-    fun getDictList(page:Int):Flowable<List<DataDictDomain>>
+    fun getDictList(page:Int,query:String):Flowable<List<DataDictDomain>>
 }

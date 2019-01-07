@@ -2,6 +2,7 @@ package com.jirawatpoo.data.source
 
 import com.jirawatpoo.data.model.DataDictDetailData
 import com.jirawatpoo.data.model.DataDictImageData
+import com.jirawatpoo.data.repository.detaildict.DetailDictCache
 import com.jirawatpoo.data.repository.detaildict.DetailDictStore
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,7 +10,9 @@ import java.lang.Exception
 import java.lang.UnsupportedOperationException
 import javax.inject.Inject
 
-class DetailDataCacheStore @Inject constructor():DetailDictStore {
+open class DetailDataCacheStore @Inject constructor(
+    private val cache: DetailDictCache
+):DetailDictStore {
     override fun clearDetailImageData(): Completable {
         return throw UnsupportedOperationException("ClearDetailData Not found operation")
     }
@@ -19,11 +22,11 @@ class DetailDataCacheStore @Inject constructor():DetailDictStore {
     }
 
     override fun getDetailImage(query: String): Single<DataDictImageData> {
-        return throw UnsupportedOperationException("ClearDetailData Not found operation")
+        return throw UnsupportedOperationException("getDetailImage Not found operation")
     }
 
     override fun clearDetailData(): Completable
-            = throw UnsupportedOperationException("ClearDetailData Not found operation")
+            = throw UnsupportedOperationException("clearDetailData Not found operation")
 
     override fun saveDetailDict(): Completable
             = Completable.complete()

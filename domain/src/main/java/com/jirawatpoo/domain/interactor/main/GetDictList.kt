@@ -12,9 +12,14 @@ class GetDictList @Inject constructor(
     threadExeutor:ThreadExecutor,
     postExecutionThread: PostExecutionThread,
     private val repository: MainRepository
-):FlowableUseCase<List<DataDictDomain>,Int>(threadExeutor,postExecutionThread) {
+):FlowableUseCase<List<DataDictDomain>,GetListParam>(threadExeutor,postExecutionThread) {
 
-    override fun buildUseCaseObservable(params: Int?): Flowable<List<DataDictDomain>>
-            = repository.getDictList(params ?: 0)
+    override fun buildUseCaseObservable(params: GetListParam?): Flowable<List<DataDictDomain>>
+            = repository.getDictList(params?.page ?: 0,params?.query ?: "")
 
 }
+
+data class GetListParam(
+    val page:Int,
+    val query:String
+)

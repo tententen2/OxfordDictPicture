@@ -39,10 +39,12 @@ interface Listner{
 
 class DiffUtil : DiffUtil.ItemCallback<DataDictModel>() {
     override fun areItemsTheSame(oldItemPosition: DataDictModel, newItemPosition: DataDictModel): Boolean {
+        Log.d("dkosakodskao","areItemsTheSame")
         return oldItemPosition.title == newItemPosition.title
     }
 
     override fun areContentsTheSame(oldItemPosition: DataDictModel, newItemPosition: DataDictModel): Boolean {
+        Log.d("dkosakodskao","areContentsTheSame")
         return oldItemPosition.title == newItemPosition.title
     }
 

@@ -27,14 +27,12 @@ import javax.inject.Inject
 
 class DetailDictFragment : BaseFragment() {
 
-
     @Inject lateinit var viewmodelFactory:ViewModelFactory
     @Inject lateinit var detailDataAdapter:DetailDataAdapter
     lateinit var detailViewModel:DetailDictViewModel
     lateinit var detailImageAdapter:DetailImageAdapter
 
     override val contentView: Int = R.layout.fragment_detail_dict
-
 
     companion object {
         fun newInstance(query:String):DetailDictFragment {

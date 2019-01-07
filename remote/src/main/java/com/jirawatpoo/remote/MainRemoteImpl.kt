@@ -14,20 +14,23 @@ class MainRemoteImpl @Inject constructor(
 
     @RawRes private val resourceId:Int = R.raw.oxford_3000
 
-    override fun getMainDataList(page: Int): Flowable<List<DataDictData>>
+    override fun getMainDataList(page: Int, query: String): Flowable<List<DataDictData>>
          = Flowable.fromCallable {
             context.jsonToClass<List<String>>(resourceId)
         }.flatMap {
+        val dataFilter = it.filter {
+            it.contains(query)
+        }
         val item = page*100
         val first = item-100
-        val last = if(item > it.size) it.size else item
-        if(first > it.size){
+        val last = if(item > dataFilter.size) dataFilter.size else item
+        if(first > dataFilter.size){
             Flowable.fromCallable {
                 listOf<String>()
             }
         }else{
             Flowable.fromCallable {
-                it.subList(first,last)
+                dataFilter.subList(first,last)
             }
         }
 

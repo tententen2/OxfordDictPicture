@@ -5,7 +5,7 @@ import com.jirawatpoo.data.model.DataDictDetailData
 import com.jirawatpoo.domain.model.DataDictDetailPresent
 import javax.inject.Inject
 
-class DetailDataMapper @Inject constructor(): Mapper<DataDictDetailPresent, DataDictDetailData> {
+open class DetailDataMapper @Inject constructor(): Mapper<DataDictDetailPresent, DataDictDetailData> {
 
     override fun mapToEntity(type: DataDictDetailData): DataDictDetailPresent {
         val raw = Gson().toJson(type)

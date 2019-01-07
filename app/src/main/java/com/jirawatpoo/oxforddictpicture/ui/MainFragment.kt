@@ -16,15 +16,18 @@ import com.jirawatpoo.oxforddictpicture.main.ViewModelFactory
 import com.jirawatpoo.oxforddictpicture.router.Router
 import com.jirawatpoo.oxforddictpicture.util.observe
 import com.jirawatpoo.oxforddictpicture.util.setSupportActionbar
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.lang.Exception
 import javax.inject.Inject
 
 
-class MainFragment :BaseFragment(),Listner {
+class MainFragment : BaseFragment(), Listner, MaterialSearchView.OnQueryTextListener {
 
-    @Inject lateinit var mainAdapter:MainAdapter
-    @Inject lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var mainAdapter: MainAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     lateinit var viewModel: MainViewModel
 
     companion object {
@@ -40,19 +43,41 @@ class MainFragment :BaseFragment(),Listner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = activity?.run {
-            ViewModelProviders.of(this,viewModelFactory).get(MainViewModel::class.java)
+            ViewModelProviders.of(this, viewModelFactory).get(MainViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
         setUpObserver()
+        setUpListner()
         setUpView()
+    }
+
+    private fun setUpListner() {
+        search_view.setOnQueryTextListener(this)
     }
 
 
     override fun onItemClick(position: String) {
         context?.let {
             startActivity(Router.detailActivity(it) {
-                putExtra(Router.DETAIL_ACTIVITY_QUERY,position)
+                putExtra(Router.DETAIL_ACTIVITY_QUERY, position)
             })
         }
+    }
+
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        query?.let {
+            viewModel.replaceSubscription(this, it)
+            setUpObserver()
+        }
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        newText?.let {
+            viewModel.replaceSubscription(this, it)
+            setUpObserver()
+        }
+        return false
     }
 
     private fun setUpView() {
@@ -64,11 +89,11 @@ class MainFragment :BaseFragment(),Listner {
     }
 
     private fun setUpObserver() {
-        observe(viewModel.getListData()){
-                mainAdapter.submitList(it)
+        observe(viewModel.getListData()) {
+            mainAdapter.submitList(it)
         }
-        observe(viewModel.stateLoading){
-            Log.d("dksokdosakdkoa",it.toString())
+        observe(viewModel.stateLoading) {
+            Log.d("dksokdosakdkoa", it.toString())
         }
     }
 
@@ -76,7 +101,7 @@ class MainFragment :BaseFragment(),Listner {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.search,menu)
+        inflater?.inflate(R.menu.search, menu)
         val item = menu?.findItem(R.id.action_search)
         search_view.setMenuItem(item)
     }

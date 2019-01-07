@@ -5,5 +5,5 @@ import io.reactivex.Flowable
 
 interface MainRemote {
 
-    fun getMainDataList(page:Int):Flowable<List<DataDictData>>
+    fun getMainDataList(page:Int,query:String):Flowable<List<DataDictData>>
 }
